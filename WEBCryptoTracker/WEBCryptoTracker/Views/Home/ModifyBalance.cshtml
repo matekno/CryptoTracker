@@ -1,0 +1,45 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous"/>
+
+<script>
+  $(document).ready(function () {
+      $('select').selectize({
+          sortField: 'text'
+      });
+  });
+</script>
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h1 class="text-center">Modify Token balances</h1>
+
+@* https://stackoverflow.com/questions/18796221/creating-a-select-box-with-a-search-option *@
+@* https://stackoverflow.com/questions/18796221/creating-a-select-box-with-a-search-option/57809086#57809086 *@
+<div class="card col-12">
+    <div class="card-header">Details</div>
+    <div class="card-body">
+        <form method="post" action="@Url.Action("ModifyBalanceForm", "Home")">
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Select token</label>
+                <select class="form-select" placeholder="ddd">
+                    <option value="ETH">ETH</option>
+                    <option value="yvDAI">yvDAI</option>
+                    <option value="DPI">DPI</option>
+                    <option value="BTC">BTC</option>
+                    <option value="WBTC">WBTC</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">New Balance</label>
+                <input type="number" class="form-control" placeholder="New Balance" aria-label="New Balance">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+
+
+        </form>
+    </div>
+</div>

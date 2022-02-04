@@ -1,0 +1,33 @@
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h1 class="text-center">Add new Chain</h1>
+<div class="card col-12">
+    <div class="card-header">Details</div>
+    <div class="card-body">
+        <form method="post" action="@Url.Action("CreateChainForm", "Home")">
+            <div class="mb-3">
+                <label class="form-label">Chain name</label>
+                <input type="text" class="form-control" name="chain" placeholder="Insert chain name">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">RPC URL</label>
+                    <input type="text" class="form-control" name="rpc" placeholder="Insert RPC url">
+            </div>
+            <div class="mb-3">
+                <label  class="form-label">Chain ID</label>
+                <input type="number" class="form-control" name="chainId" placeholder="Insert chain ID">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Block explorer URL</label>
+                <input type="text" class="form-control" name="blockExplorer" placeholder="Insert block explorer URL">
+
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
+    </div>
+</div>
