@@ -9,8 +9,14 @@ namespace ApiCryptoTracker.TokensSegunWallet;
 
 public class DBQueries
 {
+    /// <summary>
+    /// Given a wallet address, returns a List with the balance of each token that the wallet posses, with proper chain.
+    /// </summary>
+    /// <param name="wallet">A valid string wallet address.</param>
+    /// <returns>List of tokens</returns> 
     public List<TokensPerWallet> GetTokensPerWallet(string wallet)
     {
+
         using var context = new CRIPTOSContext();
         var tokens = context.Tokens.Select(token => new Tuple<int, string, int>(token.IdToken, token.CgTicker, token.FkChain)).ToList();
         var wallets = context.Wallets.Select(w => new Tuple<int, string, string>(w.IdWallet, w.Address, w.Nickname));
