@@ -1,0 +1,44 @@
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h1 class="text-center">Create new Token</h1>
+<div class="card col-12">
+    <div class="card-header">Details</div>
+    <div class="card-body">
+        <form method="post" action="@Url.Action("CreateTokenForm","Home")">
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Token name</label>
+                <input type="text" class="form-control" name="token" placeholder="Insert token name">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Contract</label>
+                <input type="text" class="form-control" name="contract" placeholder="Insert EVM compatible contract address">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Chain</label>
+                <input type="text" class="form-control" name="chain" placeholder="Insert token's chain">
+            </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Is the chain's native token?</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="isNative" value="true">
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Yes
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="isNative" value="false" checked>
+                      <label class="form-check-label" for="isNative">
+                        No
+                      </label>
+                    </div>
+                </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
+    </div>
+</div>

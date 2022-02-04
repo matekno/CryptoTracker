@@ -1,0 +1,54 @@
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<h1 class="text-center">Add new Transaction</h1>
+<div class="card col-12">
+    <div class="card-header">Details</div>
+    <div class="card-body">
+        <form method="post" action="@Url.Action("AddTransactionForm", "Home")">
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Select token</label>
+                <select class="form-select" name="token">
+                    <option value="ETH">ETH</option>
+                    <option value="yvDAI">yvDAI</option>
+                    <option value="DPI">DPI</option>
+                    <option value="BTC">BTC</option>
+                    <option value="WBTC">WBTC</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Which wallet did you used?</label>
+                <select class="form-select" name="wallet">
+                    <option value="">rapo.eth</option>
+                    <option value="">john.eth</option>
+                    <option value="">ariel.eth</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Buy or sell?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="bought" value="true" checked="">
+                    <label class="form-check-label">
+                        Buy
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="bought" value="false">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Sell
+                    </label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">How much had you operated?</label>
+                <input type="number" class="form-control" id="formGroupExampleInput2" placeholder="Insert your operation ammount">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
+    </div>
+</div>
