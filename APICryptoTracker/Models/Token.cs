@@ -12,7 +12,7 @@ namespace ApiCryptoTracker.Models
         }
 
         public int IdToken { get; set; }
-        public int? FkChain { get; set; }
+        public int FkChain { get; set; }
         public string Name { get; set; } = null!;
         public string CgTicker { get; set; } = null!;
         public string? ContractAddress { get; set; }

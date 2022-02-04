@@ -12,7 +12,7 @@ var app = builder.Build();
 app.UseSwagger(); // swagger
 app.UseSwaggerUI(); // swagger
 
-// #region nomehinchesloshuevos
+#region nomehinchesloshuevos
 //
 // app.MapGet("/", () => "Hello World!");
 // app.MapGet("/hello", (string name) => $"Hola {name}");
@@ -58,13 +58,13 @@ app.UseSwaggerUI(); // swagger
 //     return $"{token.CgTicker}";
 // });
 //
-// #endregion
+#endregion
 
 
 
 DBQueries Queries = new DBQueries();
-Queries.GetTokensPerWallet();
+var tokens = Queries.GetTokensPerWallet("0x74B0D20434FA140944f6074FF9E2B4E787faC1D5LL");
 
-
+var stop = 0;
 app.Run();
 
