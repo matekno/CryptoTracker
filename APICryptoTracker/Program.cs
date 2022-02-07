@@ -1,7 +1,10 @@
 using ApiCryptoTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using ApiCryptoTracker;
+using ApiCryptoTracker.Models.SimpleModels;
 using ApiCryptoTracker.TokensSegunWallet;
+using ApiCryptoTracker.TokensSegunWallet.Models;
+
 using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,7 +73,22 @@ app.MapGet("/GetAllUserAssets/{idUser}", async (int idUser, CRIPTOSContext conte
 });
 
 // var tokens = Queries.GetTokensPerWallet("0x74B0D20434FA140944f6074FF9E2B4E787faC1D5LL");
-var stop = 0;
-app.Run();
 
+
+using (CRIPTOSContext context = new CRIPTOSContext())
+{
+    var tokens = context.Tokens.Select(token => new SimpleToken(token.IdToken, token.CgTicker, token.FkChain)).ToList();
+    var wallets = context.Wallets.Select(w => new SimpleWallet(w.IdWallet, w.Address, w.Nickname)).ToList();
+    var walletXTokens = context.WalletXTokens.Select(tmp => new SimpleWalletXToken(tmp.FkToken, tmp.FkWallet, tmp.TokenBalance)).ToList();
+    var chains = context.Chains.Select(chain => new SimpleChain(chain.IdChain, chain.Name)).ToList();
+    var utils = new SimpleDBUtils();
+    
+    var tempo = new TokensPerUserRequest(tokens, wallets, walletXTokens, chains, utils);
+    tempo.GetTokensPerUser();
+
+    var stop = 0;
+}
+
+
+app.Run();
 
