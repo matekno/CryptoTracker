@@ -1,4 +1,6 @@
-namespace ApiCryptoTracker.Models.SimpleModels;
+using ApiCryptoTracker.Models.SimpleModels;
+
+namespace ApiCryptoTracker.Models;
 
 public class SimpleDBUtils
 {
@@ -26,7 +28,19 @@ public class SimpleDBUtils
             return new FinalBalance(oToken.Item2, oToken.Item1, oToken.Item3, oWallet.Address);
         }).ToList();
         return balances;
+    }
+    public User FindOwnerOfWallet(string wallet, List<SimpleWallet> wallets, List<User> users)
+    {
+        var u = new User();
 
+        var temp = (from w in wallets
+                    join user in users on w.FkUser equals user.IdUser
+                    where w.Address == wallet
+                    select new User() {IdUser = user.IdUser, Email = user.Email, Name = user.Name, Password = user.Password}).FirstOrDefault();
+        
+        // return r;
+        var stop = 0;
+        return temp;
     }
 
 }

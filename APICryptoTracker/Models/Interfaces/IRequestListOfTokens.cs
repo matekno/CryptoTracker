@@ -3,7 +3,7 @@ using ApiCryptoTracker.TokensSegunWallet.Models;
 
 namespace ApiCryptoTracker.Models;
 
-public interface IRequestTokens
+public interface IRequestListOfTokens
 {
     public List<SimpleToken> Tokens { get; }
     public List<SimpleWallet> Wallets { get; }

@@ -85,15 +85,17 @@ using (CRIPTOSContext context = new CRIPTOSContext())
     var users = context.Users.ToList();
     var utils = new SimpleDBUtils();
     
-    var GetTokensPerWallet = new TokensPerWalletRequest(tokens, wallets, walletXTokens, chains, utils);
+    var GetTokensPerWallet = new AllListOfTokensPerWalletRequest(tokens, wallets, walletXTokens, chains, utils);
     var result = GetTokensPerWallet.Request();
 
-    var GetTokensPerUser = new TokensPerUserRequest(tokens, wallets, walletXTokens, chains, utils);
-    var result3 = GetTokensPerUser.Request(users);
+    var GetTokensPerUser = new TokensPerAllUserRequest(tokens, wallets, walletXTokens, chains, utils, users);
+    var result3 = GetTokensPerUser.Request();
+    
+    var r = GetTokensPerUser.Utils.FindOwnerOfWallet("0xEf286e2eF2F8035330074ad53d67f20c61E15833", wallets, users);
 
-
-
-    var r = GetTokensPerUser.FindOwnerOfWallet("0xEf286e2eF2F8035330074ad53d67f20c61E15833", wallets, users);
+    var h = new TokensPerUser(tokens, wallets, walletXTokens, chains, utils, users);
+    h.Request(users[0]);
+    
 
     var stop = 0;
 }
