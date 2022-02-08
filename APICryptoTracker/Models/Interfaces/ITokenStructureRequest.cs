@@ -1,11 +1,11 @@
+using ApiCryptoTracker.Models.Interfaces;
 using ApiCryptoTracker.Models.SimpleModels;
 
 namespace ApiCryptoTracker.TokensSegunWallet.Models;
 
-public interface ITokensStructureRequest
+public interface ITokensPerSomething
 {
-    public List<FinalToken> Tokens { get; set; }
-
+    public List<ITokenWithOwner> Tokens { get; set; }
     public void InitTokenList();
-    // public string Address { get; set; }
 }
+

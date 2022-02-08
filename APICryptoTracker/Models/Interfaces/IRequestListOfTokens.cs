@@ -11,7 +11,6 @@ public interface IRequestListOfTokens
     public List<SimpleChain> Chains { get; }
     public SimpleDBUtils Utils { get; }
 
-    public List<ITokensStructureRequest> Request();
-
-
+    public List<ITokensPerSomething> Request();
+    
 }

@@ -1,11 +1,14 @@
+using ApiCryptoTracker.Models.Interfaces;
 using ApiCryptoTracker.Models.SimpleModels;
 
 namespace ApiCryptoTracker.Models;
 
 public class SimpleDBUtils
 {
-    public List<FinalBalance> GetFinalBalances(List<SimpleWalletXToken> walletXTokens, List<SimpleWallet> wallets, List<SimpleToken> tokens, List<SimpleChain> chains)
+    public List<ITokenWithOwner> GetFinalBalances(List<SimpleWalletXToken> walletXTokens, List<SimpleWallet> wallets, List<SimpleToken> tokens, List<SimpleChain> chains)
     {
+        var list = new List<ITokenWithOwner>();
+        
         var tokensWithChain = tokens.Join(chains, token => token.FkChain, chain => chain.IdChain, (oToken, oChain) =>
         {
             // item1: idToken, item2: cgTicker, item3: chainName
@@ -25,9 +28,10 @@ public class SimpleDBUtils
             // item2: cgTicker,
             // item3: chain,
             // item4: address
-            return new FinalBalance(oToken.Item2, oToken.Item1, oToken.Item3, oWallet.Address);
+            return new CompleteTokenWithBalance(){Balance = oToken.Item2, CgTicker = oToken.Item1, Chain = oToken.Item3, Address = oWallet.Address};
         }).ToList();
-        return balances;
+        list.AddRange(balances);
+        return list;
     }
     public User FindOwnerOfWallet(string wallet, List<SimpleWallet> wallets, List<User> users)
     {

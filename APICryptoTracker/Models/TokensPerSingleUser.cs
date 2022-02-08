@@ -1,24 +1,27 @@
+using ApiCryptoTracker.Models.Interfaces;
 using ApiCryptoTracker.Models.SimpleModels;
 using ApiCryptoTracker.TokensSegunWallet.Models;
 
 namespace ApiCryptoTracker.Models;
 
-public class TokensPerUser : IRequestListOfTokens
+public class TokensPerSingleUser : IRequestListOfTokens
 {
     public List<SimpleToken> Tokens { get; }
     public List<SimpleWallet> Wallets { get; }
     public List<SimpleWalletXToken> WalletXTokens { get; }
     public List<SimpleChain> Chains { get; }
     public SimpleDBUtils Utils { get; }
-    public List<ITokensStructureRequest> Request()
+    
+    
+    public List<ITokensPerSomething> Request()
     {
-        throw new NotImplementedException();
+        return null;
     }
 
     public List<User> Users { get; set; }
 
     
-    public TokensPerUser(List<SimpleToken> tokens, List<SimpleWallet> wallets, List<SimpleWalletXToken> walletXTokens, List<SimpleChain> chains, SimpleDBUtils utils, List<User> users)
+    public TokensPerSingleUser(List<SimpleToken> tokens, List<SimpleWallet> wallets, List<SimpleWalletXToken> walletXTokens, List<SimpleChain> chains, SimpleDBUtils utils, List<User> users)
     {
         Tokens = tokens;
         Wallets = wallets;
@@ -27,24 +30,21 @@ public class TokensPerUser : IRequestListOfTokens
         Utils = utils;
         Users = users;
     }
-    public List<ITokensStructureRequest> Request(User user)
+    public List<ITokenWithOwner> Request(User user)
     {
-        var toReturn = new List<FinalBalance>();
+        var toReturn = new List<ITokenWithOwner>();
         var finalBalances = Utils.GetFinalBalances(WalletXTokens, Wallets, Tokens, Chains);
-        
         foreach (var u in Users)
         {
             foreach (var token in finalBalances)
             {
-                var t = Utils.3(token.Address, Wallets, Users);
+                var t = Utils.FindOwnerOfWallet(token.Address, Wallets, Users);
                 if (t.IdUser == user.IdUser)
                 {
                     toReturn.Add(token);
                 }
             }
         }
-
-
-        return null;
+        return toReturn;
     }
 }

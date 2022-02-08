@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ApiCryptoTracker.Models;
 
-public class TokensPerAllUserRequest
+public class FullTokensPerUserRequest
 {
     public List<SimpleToken> Tokens { get; }
     public List<SimpleWallet> Wallets { get; }
@@ -14,7 +14,7 @@ public class TokensPerAllUserRequest
     public SimpleDBUtils Utils { get; }
     public List<User> Users { get; set; }
     
-    public TokensPerAllUserRequest(List<SimpleToken> tokens, List<SimpleWallet> wallets, List<SimpleWalletXToken> walletXTokens, List<SimpleChain> chains, SimpleDBUtils utils, List<User> users)
+    public FullTokensPerUserRequest(List<SimpleToken> tokens, List<SimpleWallet> wallets, List<SimpleWalletXToken> walletXTokens, List<SimpleChain> chains, SimpleDBUtils utils, List<User> users)
     {
         Tokens = tokens;
         Wallets = wallets;
@@ -24,30 +24,30 @@ public class TokensPerAllUserRequest
         Users = users;
     }
 
-    public Dictionary<User, List<FinalBalance>> Request()
+    public List<ITokensPerSomething> Request()
     {
         var finalBalances = Utils.GetFinalBalances(WalletXTokens, Wallets, Tokens, Chains);
-        var dict = new Dictionary<User, List<FinalBalance>>();
+        var usersXTokensToReturn = new List<ITokensPerSomething>();
+        
+
 
         foreach (var user in Users)
         {
-            dict.Add(user, new List<FinalBalance>());
-        }
-
-
-        foreach (var keyValPair in dict)
-        {
+            var tokensPerUser = new TokensPerUser();
+            tokensPerUser.InitTokenList();
+            tokensPerUser.User = user;
             foreach (var token in finalBalances)
             {
-                var t = Utils.FindOwnerOfWallet(token.Address, Wallets, Users);
-                if (t.IdUser == keyValPair.Key.IdUser)
+                var owner = Utils.FindOwnerOfWallet(token.Address, Wallets, Users);
+                if (owner.IdUser == user.IdUser)
                 {
-                    keyValPair.Value.Add(token);
+                    tokensPerUser.Tokens.Add(token);
+                    
                 }
             }
+            usersXTokensToReturn.Add(tokensPerUser);
         }
-
-        return dict;
+        return usersXTokensToReturn;
     }
     
 
