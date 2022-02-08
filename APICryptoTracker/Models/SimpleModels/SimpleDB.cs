@@ -47,11 +47,13 @@ public class SimpleWallet
     public  int IdWallet;
     public string Address;
     public string Nickname;
+    public int FkUser;
 
-    public SimpleWallet(int id, string address, string nickname)
+    public SimpleWallet(int id, string address, string nickname, int fkUser)
     {
         IdWallet = id; 
         Address = address;
         Nickname = nickname;
+        FkUser = fkUser;
     }
 }

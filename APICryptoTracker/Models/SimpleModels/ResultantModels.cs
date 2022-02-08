@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace ApiCryptoTracker.Models.SimpleModels;
 
 public class TokenXChain
@@ -34,4 +36,15 @@ public class FinalToken
 {    
     public string CgTicker { get; init; }
     public double Balance { get; init; }
+}
+
+public class UserXTokens
+{
+    public string User;
+    public List<FinalToken> tokens;
+}
+
+public class UserXWallet
+{
+    public new Dictionary<User, Wallet> Dictionary;
 }

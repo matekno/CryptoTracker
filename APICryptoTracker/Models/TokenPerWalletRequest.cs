@@ -8,29 +8,33 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ApiCryptoTracker.TokensSegunWallet.Models;
 
-public class TokensPerWalletRequest
+public class TokensPerWalletRequest : IRequestTokens
 {
-    private List<SimpleToken> _tokens;
-    private List<SimpleWallet> _wallets;
-    private List<SimpleWalletXToken> _walletXTokens;
-    private List<SimpleChain> _chains;
-    private SimpleDBUtils _utils;
+    public List<SimpleToken> Tokens { get; }
+    public List<SimpleWallet> Wallets { get; }
+    public List<SimpleWalletXToken> WalletXTokens { get; }
+    public List<SimpleChain> Chains { get; }
+    public SimpleDBUtils Utils { get; }
+    
+    
+
     
     
     public TokensPerWalletRequest(List<SimpleToken> tokens, List<SimpleWallet> wallets, List<SimpleWalletXToken> walletXTokens, List<SimpleChain> chains, SimpleDBUtils utils)
     {
-        _tokens = tokens;
-        _wallets = wallets;
-        _walletXTokens = walletXTokens;
-        _chains = chains;
-        _utils = utils;
-
+        Tokens = tokens;
+        Wallets = wallets;
+        WalletXTokens = walletXTokens;
+        Chains = chains;
+        Utils = utils;
     }
-    
-    public List<ITokensRequest> GetTokensPerWallet()
+
+
+
+    public List<ITokensStructureRequest> Request()
     {
-        var listOfWalletsToReturn = new List<ITokensRequest>();
-        var finalBalances = _utils.GetFinalBalances(_walletXTokens, _wallets, _tokens, _chains);
+        var listOfWalletsToReturn = new List<ITokensStructureRequest>();
+        var finalBalances = Utils.GetFinalBalances(WalletXTokens, Wallets, Tokens, Chains);
         
         var result = (from t in finalBalances
                      group t by t.Address 
@@ -39,7 +43,7 @@ public class TokensPerWalletRequest
         
         foreach (var wallet in result)
         {
-            var final = new TokensPerWallet(){Address = wallet.Key};
+            var final = new TokensStructurePerWallet(){Address = wallet.Key};
             final.InitTokenList();
             foreach (var token in wallet)
             {

@@ -78,13 +78,22 @@ app.MapPost("/post", async (Token token, CRIPTOSContext context) =>
 using (CRIPTOSContext context = new CRIPTOSContext())
 {
     var tokens = context.Tokens.Select(token => new SimpleToken(token.IdToken, token.CgTicker, token.FkChain)).ToList();
-    var wallets = context.Wallets.Select(w => new SimpleWallet(w.IdWallet, w.Address, w.Nickname)).ToList();
+    var wallets = context.Wallets.Select(w => new SimpleWallet(w.IdWallet, w.Address, w.Nickname, w.FkUser)).ToList();
     var walletXTokens = context.WalletXTokens.Select(tmp => new SimpleWalletXToken(tmp.FkToken, tmp.FkWallet, tmp.TokenBalance)).ToList();
     var chains = context.Chains.Select(chain => new SimpleChain(chain.IdChain, chain.Name)).ToList();
+    // var users = context.Users.Select(u => new User()).ToList();
+    var users = context.Users.ToList();
     var utils = new SimpleDBUtils();
     
-    var tempo = new TokensPerWalletRequest(tokens, wallets, walletXTokens, chains, utils);
-    var result = tempo.GetTokensPerWallet();
+    var GetTokensPerWallet = new TokensPerWalletRequest(tokens, wallets, walletXTokens, chains, utils);
+    var result = GetTokensPerWallet.Request();
+
+    var GetTokensPerUser = new TokensPerUserRequest(tokens, wallets, walletXTokens, chains, utils);
+    var result3 = GetTokensPerUser.Request(users);
+
+
+
+    var r = GetTokensPerUser.FindOwnerOfWallet("0xEf286e2eF2F8035330074ad53d67f20c61E15833", wallets, users);
 
     var stop = 0;
 }
