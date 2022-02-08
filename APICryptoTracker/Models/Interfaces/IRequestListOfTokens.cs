@@ -1,3 +1,4 @@
+using ApiCryptoTracker.Models.Interfaces;
 using ApiCryptoTracker.Models.SimpleModels;
 using ApiCryptoTracker.TokensSegunWallet.Models;
 
@@ -12,5 +13,4 @@ public interface IRequestListOfTokens
     public SimpleDBUtils Utils { get; }
 
     public List<ITokensPerSomething> Request();
-    
 }

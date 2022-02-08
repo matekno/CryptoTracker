@@ -34,15 +34,12 @@ public class TokensPerSingleUser : IRequestListOfTokens
     {
         var toReturn = new List<ITokenWithOwner>();
         var finalBalances = Utils.GetFinalBalances(WalletXTokens, Wallets, Tokens, Chains);
-        foreach (var u in Users)
+        foreach (var token in finalBalances)
         {
-            foreach (var token in finalBalances)
+            var t = Utils.FindOwnerOfWallet(token.Address, Wallets, Users);
+            if (t.IdUser == user.IdUser)
             {
-                var t = Utils.FindOwnerOfWallet(token.Address, Wallets, Users);
-                if (t.IdUser == user.IdUser)
-                {
-                    toReturn.Add(token);
-                }
+                toReturn.Add(token);
             }
         }
         return toReturn;

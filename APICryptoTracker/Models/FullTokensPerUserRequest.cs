@@ -1,3 +1,4 @@
+using ApiCryptoTracker.Models.Interfaces;
 using ApiCryptoTracker.Models.SimpleModels;
 using ApiCryptoTracker.TokensSegunWallet.Models;
 using Microsoft.AspNetCore.Http.Metadata;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ApiCryptoTracker.Models;
 
-public class FullTokensPerUserRequest
+public class FullTokensPerUserRequest : IRequestListOfTokens
 {
     public List<SimpleToken> Tokens { get; }
     public List<SimpleWallet> Wallets { get; }
@@ -28,8 +29,6 @@ public class FullTokensPerUserRequest
     {
         var finalBalances = Utils.GetFinalBalances(WalletXTokens, Wallets, Tokens, Chains);
         var usersXTokensToReturn = new List<ITokensPerSomething>();
-        
-
 
         foreach (var user in Users)
         {
@@ -42,7 +41,6 @@ public class FullTokensPerUserRequest
                 if (owner.IdUser == user.IdUser)
                 {
                     tokensPerUser.Tokens.Add(token);
-                    
                 }
             }
             usersXTokensToReturn.Add(tokensPerUser);

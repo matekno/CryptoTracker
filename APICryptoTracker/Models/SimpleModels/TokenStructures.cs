@@ -19,6 +19,7 @@ public class TokensPerUser : ITokensPerSomething
     public List<ITokenWithOwner> Tokens { get; set; }
     public void InitTokenList()
     {
-        Tokens = new List<ITokenWithOwner>();    }
+        Tokens = new List<ITokenWithOwner>();    
+    }
 
 }

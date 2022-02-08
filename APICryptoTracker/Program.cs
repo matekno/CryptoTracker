@@ -74,7 +74,7 @@ app.MapPost("/post", async (Token token, CRIPTOSContext context) =>
 
 // var tokens = Queries.GetTokensPerWallet("0x74B0D20434FA140944f6074FF9E2B4E787faC1D5LL");
 
-
+//TODO: en los metodos GetTokenPerUser y ¿GetTokenPerWallet? falta agrupar los tokens en caso de que se repitan. Hacer una funcion para los dos!!!!!!!
 using (CRIPTOSContext context = new CRIPTOSContext())
 {
     var tokens = context.Tokens.Select(token => new SimpleToken(token.IdToken, token.CgTicker, token.FkChain)).ToList();
@@ -86,15 +86,13 @@ using (CRIPTOSContext context = new CRIPTOSContext())
     var utils = new SimpleDBUtils();
     
     var GetTokensPerWallet = new FullTokensPerWallet(tokens, wallets, walletXTokens, chains, utils);
-    var result = GetTokensPerWallet.Request();
+    var fullTokensPerWallet = GetTokensPerWallet.Request();
 
     var GetTokensPerUser = new FullTokensPerUserRequest(tokens, wallets, walletXTokens, chains, utils, users);
-    var result3 = GetTokensPerUser.Request();
+    var fullTokensPerUser = GetTokensPerUser.Request();
     
-    var r = GetTokensPerUser.Utils.FindOwnerOfWallet("0xEf286e2eF2F8035330074ad53d67f20c61E15833", wallets, users);
-
-    var h = new TokensPerSingleUser(tokens, wallets, walletXTokens, chains, utils, users);
-    var a = h.Request(users[0]); // no anda bien
+    var h = new TokensPerSingleUser(tokens, wallets, walletXTokens, chains, utils, users); 
+    var a = h.Request(users[1]); // no anda bien
     
 
     var stop = 0;

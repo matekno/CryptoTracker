@@ -1,3 +1,5 @@
+using ApiCryptoTracker.Models.Interfaces;
+
 namespace ApiCryptoTracker.Models.SimpleModels;
 
 public class SimpleWalletXToken
@@ -16,7 +18,6 @@ public class SimpleWalletXToken
 
 public class SimpleChain
 {
-
     public int IdChain { get; }
     public string Name { get; }
 
@@ -27,10 +28,10 @@ public class SimpleChain
     }
 }
 
-public class SimpleToken
+public class SimpleToken : IToken
 {
     public int IdToken { get; }
-    public string CgTicker { get; }
+    public string CgTicker { get; init; }
     public int FkChain { get; }
 
     public SimpleToken(int id, string cg, int fkChain)
