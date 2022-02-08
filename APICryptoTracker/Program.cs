@@ -1,7 +1,10 @@
 using ApiCryptoTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using ApiCryptoTracker;
+using ApiCryptoTracker.Models.SimpleModels;
 using ApiCryptoTracker.TokensSegunWallet;
+using ApiCryptoTracker.TokensSegunWallet.Models;
+
 using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -63,14 +66,38 @@ app.MapPost("/post", async (Token token, CRIPTOSContext context) =>
 #endregion
 
 
-app.MapGet("/GetAllUserAssets/{idUser}", async (int idUser, CRIPTOSContext context) =>
-{
-    DBQueries Queries = new DBQueries();
-    return Queries.GetTokensPerUser(idUser);
-});
+// app.MapGet("/GetAllUserAssets/{idUser}", async (int idUser, CRIPTOSContext context) =>
+// {
+//     DBQueries Queries = new DBQueries();
+//     return Queries.GetTokensPerUser(idUser);
+// });
 
 // var tokens = Queries.GetTokensPerWallet("0x74B0D20434FA140944f6074FF9E2B4E787faC1D5LL");
-var stop = 0;
-app.Run();
 
+//TODO: en los metodos GetTokenPerUser y ¿GetTokenPerWallet? falta agrupar los tokens en caso de que se repitan. Hacer una funcion para los dos!!!!!!!
+using (CRIPTOSContext context = new CRIPTOSContext())
+{
+    var tokens = context.Tokens.Select(token => new SimpleToken(token.IdToken, token.CgTicker, token.FkChain)).ToList();
+    var wallets = context.Wallets.Select(w => new SimpleWallet(w.IdWallet, w.Address, w.Nickname, w.FkUser)).ToList();
+    var walletXTokens = context.WalletXTokens.Select(tmp => new SimpleWalletXToken(tmp.FkToken, tmp.FkWallet, tmp.TokenBalance)).ToList();
+    var chains = context.Chains.Select(chain => new SimpleChain(chain.IdChain, chain.Name)).ToList();
+    // var users = context.Users.Select(u => new User()).ToList();
+    var users = context.Users.ToList();
+    var utils = new SimpleDBUtils();
+    
+    var GetTokensPerWallet = new FullTokensPerWallet(tokens, wallets, walletXTokens, chains, utils);
+    var fullTokensPerWallet = GetTokensPerWallet.Request();
+
+    var GetTokensPerUser = new FullTokensPerUserRequest(tokens, wallets, walletXTokens, chains, utils, users);
+    var fullTokensPerUser = GetTokensPerUser.Request();
+    
+    var GetTokensPerSingleUser = new TokensPerSingleUser(tokens, wallets, walletXTokens, chains, utils, users); 
+    var a = GetTokensPerSingleUser.Request(users[1]); // no anda bien
+    
+
+    var stop = 0;
+}
+
+
+app.Run();
 
