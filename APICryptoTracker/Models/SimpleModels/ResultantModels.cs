@@ -29,3 +29,9 @@ public class FinalBalance
         Address = address;
     }
 }
+
+public class FinalToken
+{    
+    public string CgTicker { get; init; }
+    public double Balance { get; init; }
+}

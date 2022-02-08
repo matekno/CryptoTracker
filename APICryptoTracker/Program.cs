@@ -66,11 +66,11 @@ app.MapPost("/post", async (Token token, CRIPTOSContext context) =>
 #endregion
 
 
-app.MapGet("/GetAllUserAssets/{idUser}", async (int idUser, CRIPTOSContext context) =>
-{
-    DBQueries Queries = new DBQueries();
-    return Queries.GetTokensPerUser(idUser);
-});
+// app.MapGet("/GetAllUserAssets/{idUser}", async (int idUser, CRIPTOSContext context) =>
+// {
+//     DBQueries Queries = new DBQueries();
+//     return Queries.GetTokensPerUser(idUser);
+// });
 
 // var tokens = Queries.GetTokensPerWallet("0x74B0D20434FA140944f6074FF9E2B4E787faC1D5LL");
 
@@ -83,8 +83,8 @@ using (CRIPTOSContext context = new CRIPTOSContext())
     var chains = context.Chains.Select(chain => new SimpleChain(chain.IdChain, chain.Name)).ToList();
     var utils = new SimpleDBUtils();
     
-    var tempo = new TokensPerUserRequest(tokens, wallets, walletXTokens, chains, utils);
-    tempo.GetTokensPerUser();
+    var tempo = new TokensPerWalletRequest(tokens, wallets, walletXTokens, chains, utils);
+    var result = tempo.GetTokensPerWallet();
 
     var stop = 0;
 }
