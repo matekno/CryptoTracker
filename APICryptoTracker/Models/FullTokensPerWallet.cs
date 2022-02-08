@@ -1,6 +1,7 @@
 using System.ComponentModel.Design;
 using System.Linq;
 using ApiCryptoTracker.Models;
+using ApiCryptoTracker.Models.Interfaces;
 using ApiCryptoTracker.Models.SimpleModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
