@@ -21,5 +21,4 @@ public class TokensPerUser : ITokensPerSomething
     {
         Tokens = new List<ITokenWithOwner>();    
     }
-
 }
