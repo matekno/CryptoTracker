@@ -88,6 +88,8 @@ using (CRIPTOSContext context = new CRIPTOSContext())
     var GetTokensPerWallet = new FullTokensPerWallet(tokens, wallets, walletXTokens, chains, utils);
     var fullTokensPerWallet = GetTokensPerWallet.Request();
 
+    var el2 = new FullTokensPerWallet2(context);
+
     var GetTokensPerUser = new FullTokensPerUserRequest(tokens, wallets, walletXTokens, chains, utils, users);
     var fullTokensPerUser = GetTokensPerUser.Request();
     

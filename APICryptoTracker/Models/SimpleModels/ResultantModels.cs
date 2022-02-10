@@ -17,6 +17,17 @@ public class TokenXChain
     }
 }
 
+public class TokenXChain2
+{
+    public Dictionary<Token, Chain> TokenXChain { get; init; }
+
+    public TokenXChain2(Token token, Chain chain)
+    {
+        TokenXChain = new Dictionary<Token, Chain>();
+        TokenXChain.Add(token,chain);
+    }
+}
+
 public class CompleteTokenWithBalance : ITokenWithOwner
 {
     public double Balance { get; init; }
